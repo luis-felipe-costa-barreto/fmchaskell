@@ -109,7 +109,9 @@ n % m = undefined
 -- x `absDiff` y = |x - y|
 -- (Careful here: this - is the actual minus operator we know from the integers!)
 (|-|) :: Nat -> Nat -> Nat
-(|-|) = undefined
+n |-| O = n
+O |-| n = n
+S n |-| S m = n |-| m
 
 absDiff :: Nat -> Nat -> Nat
 absDiff = (|-|)
