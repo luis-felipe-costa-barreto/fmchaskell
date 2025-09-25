@@ -34,25 +34,20 @@ infixl 6 +
 
 -- Output: O means False, S O means True
 isZero :: Nat -> Nat
-isZero(O) = S(O)
-isZero(S(n)) = O
-
--- pred is the predecessor but we define zero's to be zero
-pred :: Nat -> Nat
-pred(O) = O
-pred(S(n)) = n
+isZero O = S O
+isZero (S n) = O
 
 -- Output: O means False, S O means True
 even :: Nat -> Nat
-even(O) = S(O)
-even(S(O)) = O
-even (S(S(n))) = even(n)
+even O = S O
+even (S O) = O
+even (S (S n)) = even n
 
 
 odd :: Nat -> Nat
-odd(O) = O
-odd(S(O)) = S(O)
-odd (S(S(n))) = odd(n)
+odd O = O
+odd (S O) = S O
+odd (S (S n)) = odd n
 
 -- This is called the dotminus or monus operator
 -- (also: proper subtraction, arithmetic subtraction, ...).
@@ -61,24 +56,29 @@ odd (S(S(n))) = odd(n)
 
 (-*) :: Nat -> Nat -> Nat
 n -* O = n
-n -* S(m) = pred(n) -* m
+O -* n = O
+S n -* S m = n -* m
 
 infixl 6 -*
 
 monus :: Nat -> Nat -> Nat
 monus = (-*)
 
+-- pred is the predecessor but we define zero's to be zero
+pred :: Nat -> Nat
+pred n = n -* S O
+
 -- multiplication
 (*) :: Nat -> Nat -> Nat
 n * O = O
-n * S(m) = (n * m) + n
+n * S m = n * m + n
 
 infixl 7 *
 
 -- exponentiation
 (^) :: Nat -> Nat -> Nat
 n ^ O = one
-n ^ S(m) = (n ^ m) * n
+n ^ S m = n ^ m * n
 
 infixr 8 ^
 
@@ -86,13 +86,18 @@ infixr 8 ^
 
 -- quotient
 (/) :: Nat -> Nat -> Nat
-(/) = undefined
+O / n = O
+n / m =
+  case m of
+    O -> undefined
+    S x -> S ((n -* m)/m)
+
 
 infixl 7 /
 
 -- remainder
 (%) :: Nat -> Nat -> Nat
-(%) = undefined
+n % m = undefined
 
 -- divides
 -- just for a change, we start by defining the "symbolic" operator
@@ -103,14 +108,15 @@ infixl 7 /
 
 -- x `absDiff` y = |x - y|
 -- (Careful here: this - is the actual minus operator we know from the integers!)
-absDiff :: Nat -> Nat -> Nat
-absDiff = undefined
-
 (|-|) :: Nat -> Nat -> Nat
-(|-|) = absDiff
+(|-|) = undefined
+
+absDiff :: Nat -> Nat -> Nat
+absDiff = (|-|)
 
 factorial :: Nat -> Nat
-factorial = undefined
+factorial O = S O
+factorial (S n) = S n * factorial n
 
 -- signum of a number (-1, 0, or 1)
 sg :: Nat -> Nat
