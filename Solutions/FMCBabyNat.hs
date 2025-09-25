@@ -84,20 +84,26 @@ infixr 8 ^
 
 -- decide: infix? ? ^
 
+-- >=
+(>=) :: Nat -> Nat -> Nat
+n >= O = S O
+O >= S n = O
+S n >= S m = n >= m
+
 -- quotient
 (/) :: Nat -> Nat -> Nat
-O / n = O
+n / O = undefined
 n / m =
-  case m of
-    O -> undefined
-    S x -> S ((n -* m)/m)
+  case n >= m of
+    O -> O
+    S O -> S ((n -* m)/m)
 
 
 infixl 7 /
 
 -- remainder
 (%) :: Nat -> Nat -> Nat
-n % m = undefined
+n % m = n -* n / m * m
 
 -- divides
 -- just for a change, we start by defining the "symbolic" operator
