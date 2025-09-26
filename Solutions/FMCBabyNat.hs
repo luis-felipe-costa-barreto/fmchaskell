@@ -35,7 +35,7 @@ infixl 6 +
 -- Output: O means False, S O means True
 isZero :: Nat -> Nat
 isZero O = S O
-isZero (S n) = O
+isZero (S _) = O
 
 -- Output: O means False, S O means True
 even :: Nat -> Nat
@@ -56,7 +56,7 @@ odd (S (S n)) = odd n
 
 (-*) :: Nat -> Nat -> Nat
 n -* O = n
-O -* n = O
+O -* _ = O
 S n -* S m = n -* m
 
 infixl 6 -*
@@ -70,14 +70,14 @@ pred n = n -* S O
 
 -- multiplication
 (*) :: Nat -> Nat -> Nat
-n * O = O
+_ * O = O
 n * S m = n * m + n
 
 infixl 7 *
 
 -- exponentiation
 (^) :: Nat -> Nat -> Nat
-n ^ O = one
+_ ^ O = one
 n ^ S m = n ^ m * n
 
 infixr 8 ^
@@ -86,13 +86,13 @@ infixr 8 ^
 
 -- >=
 (>=) :: Nat -> Nat -> Nat
-n >= O = S O
-O >= S n = O
+_ >= O = S O
+O >= S _ = O
 S n >= S m = n >= m
 
 -- quotient
 (/) :: Nat -> Nat -> Nat
-n / O = undefined
+_ / O = undefined
 n / m =
   case n >= m of
     O -> O
@@ -113,7 +113,7 @@ n % m = n -* n / m * m
 n ||| m =
   case n % m of
     O -> S O
-    S x -> O
+    S _ -> O
 
 -- x `absDiff` y = |x - y|
 -- (Careful here: this - is the actual minus operator we know from the integers!)
@@ -133,14 +133,14 @@ factorial (S n) = S n * factorial n
 -- signum of a number (-1, 0, or 1)
 sg :: Nat -> Nat
 sg O = O
-sg (S n) = S O
+sg (S _) = S O
 
 -- lo b a is the floor of the logarithm base b of a
 lo :: Nat -> Nat -> Nat
-lo O n = undefined
-lo n O = undefined
-lo (S O) n = undefined
-lo n (S O) = O
+lo O _ = undefined
+lo _ O = undefined
+lo (S O) _ = undefined
+lo _ (S O) = O
 lo n m = S (lo n (m/n))
 
 infixr 8 `lo`
