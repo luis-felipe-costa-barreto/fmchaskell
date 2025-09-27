@@ -43,19 +43,15 @@ instance Enum Bool where
 
 -- conjunction (AND)
 (&&) :: Bool -> Bool -> Bool
-p && q =
-    case fromEnum p + fromEnum q of
-        2 -> True
-        _ -> False
+True && True = True
+_ && _ = False
 
 infixr 3 &&
 
 -- disjunction (OR)
 (||) :: Bool -> Bool -> Bool
-p || q =
-    case fromEnum p + fromEnum q of
-        0 -> False
-        _ -> True
+False || False = False
+_ || _ = True
 
 infixr 2 ||
 
