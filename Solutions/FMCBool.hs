@@ -26,68 +26,82 @@ data Bool = False | True
 
 instance Show Bool where
 
-    show = undefined
+    show True = "True"
+    show False = "False"
 
 instance Enum Bool where
 
-    toEnum  = undefined
+    toEnum :: Int -> Bool
+    toEnum 0 = False
+    toEnum 1 = True
+    toEnum n = undefined
 
-    fromEnum  = undefined
+    fromEnum :: Bool -> Int
+    fromEnum False = 0
+    fromEnum True = 1
+
 
 -- conjunction (AND)
 (&&) :: Bool -> Bool -> Bool
-(&&) = undefined
+p && q =
+    case fromEnum p + fromEnum q of
+        2 -> True
+        _ -> False
 
 infixr 3 &&
 
 -- disjunction (OR)
 (||) :: Bool -> Bool -> Bool
-(||) = undefined
+p || q =
+    case fromEnum p + fromEnum q of
+        0 -> False
+        _ -> True
 
 infixr 2 ||
 
+-- boolean negation
+not :: Bool -> Bool
+not True = False
+not False = True
+
 -- NAND (Sheffer stroke)
 (/|\) :: Bool -> Bool -> Bool
-(/|\) = undefined
+p /|\ q = not (p && q)
 
 infixr 2 /|\
 
 -- NOR (aka: Peirce arrow or Quine dagger)
 (\|/) :: Bool -> Bool -> Bool
-(\|/) = undefined
+p \|/ q = not (p || q)
 
 infixr 2 \|/
 
 -- XOR (exclusive disjunction)
 (<=/=>) :: Bool -> Bool -> Bool
-(<=/=>) = undefined
+p <=/=> q = (p && not q) || (not p && q)
 
 infixr 2 <=/=>
 
--- boolean negation
-not :: Bool -> Bool
-not = undefined
-
 -- if-then-else expression
 ifThenElse :: Bool -> a -> a -> a
-ifThenElse = undefined
+ifThenElse True x _ = x
+ifThenElse False _ y = y
 
 -- logical "implies"
 (==>) :: Bool -> Bool -> Bool
-(==>) = undefined
+True ==> False = False
+_ ==> _ = True 
 
 infixr 1 ==>
 
 -- logical "implied by"
 (<==) :: Bool -> Bool -> Bool
-(<==) = undefined
+p <== q = q ==> p
 
 infixl 1 <==
 
 -- logical equivalence
 (<=>) :: Bool -> Bool -> Bool
-(<=>) = undefined
+p <=> q = (p ==> q) && (p <== q)
 
 infixr 1 <=>
-
-
