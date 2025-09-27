@@ -171,7 +171,7 @@ n <%> m = n <-> n </> m <*> m
 -- euclidean division
 -- missão
 eucdiv :: (Nat, Nat) -> (Nat, Nat)
-eucdiv = undefined
+eucdiv (n, m) = (n </> m, n <%> m)
 
 -- divides
 (<|>) :: Nat -> Nat -> Bool
