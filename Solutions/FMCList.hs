@@ -81,23 +81,25 @@ product :: Num a => [a] -> a
 product [] = 1
 product (x : xs) = x * product xs
 
-reverse :: [a] -> [a]
+-- (snoc is cons written backwards)
+snoc :: a -> [a] -> [a]
+snoc x [] = [x]
+snoc xout (xin : xs) = xin : snoc xout xs
 
-reverse = undefined
+(<:) :: [a] -> a -> [a]
+(<:) = flip snoc
+
+reverse :: [a] -> [a]
+reverse [] = []
+reverse (x : xs) = snoc x (reverse xs)
 
 (++) :: [a] -> [a] -> [a]
-(++) = undefined
+[] ++ ys = ys
+(x : xs) ++ ys = x : (xs ++ ys)
 
 -- right-associative for performance!
 -- (what?!)
 infixr 5 ++
-
--- (snoc is cons written backwards)
-snoc :: a -> [a] -> [a]
-snoc = undefined
-
-(<:) :: [a] -> a -> [a]
-(<:) = flip snoc
 
 -- different implementation of (++)
 (+++) :: [a] -> [a] -> [a]
