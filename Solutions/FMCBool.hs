@@ -34,7 +34,7 @@ instance Enum Bool where
     toEnum :: Int -> Bool
     toEnum 0 = False
     toEnum 1 = True
-    toEnum n = undefined
+    toEnum _ = undefined
 
     fromEnum :: Bool -> Int
     fromEnum False = 0
