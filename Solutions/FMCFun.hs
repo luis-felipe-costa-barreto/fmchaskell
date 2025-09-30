@@ -12,7 +12,7 @@ import Prelude hiding
 
 -- curry takes a "traditional" binary function
 -- and returns its currified version
-curry :: undefined
+curry :: ((a , a) -> a) -> (a -> a -> a)
 curry = undefined
 
 -- uncurry takes a currified function

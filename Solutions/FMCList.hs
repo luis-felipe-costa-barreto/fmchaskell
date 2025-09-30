@@ -171,9 +171,23 @@ infixl 5 +++
 
 -- transpose
 
+last :: [a] -> a
+last [] = undefined
+last [x] = x
+last (x : xs) = last xs
+
+pop :: [a] -> [a]
+pop [] = undefined
+pop [a] = []
+pop (x : xs) = x : pop xs
+
 -- checks if the letters of a phrase form a palindrome (see below for examples)
 palindrome :: String -> Bool
-palindrome = undefined
+palindrome [] = undefined
+palindrome xs
+  | length xs < 4 = head xs == last xs
+  | head xs == last xs = palindrome (pop (tail xs))
+  | otherwise = False
 
 {-
 
