@@ -43,9 +43,8 @@ instance Eq Nat where
 
     (==) :: Nat -> Nat -> Bool
     O == O = True
-    S _ == O = False
-    O == S _ = False
     S n == S m = n == m
+    _ == _ = False
 
 instance Ord Nat where
 
