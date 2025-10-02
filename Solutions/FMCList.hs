@@ -13,6 +13,7 @@ import Prelude
 import qualified Prelude   as P
 import qualified Data.List as L
 import qualified Data.Char as C
+import FMCNat
 
 {- import qualified ... as ... ?
 
@@ -69,7 +70,7 @@ null :: [a] -> Bool
 null [] = True
 null _ = False
 
-length :: Integral i => [a] -> i
+length :: [a] -> Nat
 length [] = 0
 length (_ : xs) = length xs + 1
 
@@ -112,10 +113,17 @@ xs +++ (y:ys) = (xs +++ [y]) +++ ys
 infixl 5 +++
 
 -- minimum :: Ord a => [a] -> a
+
 -- maximum :: Ord a => [a] -> a
 
 -- take
+take :: Nat -> [a] -> [a]
+take 0 xs = []
+take n (x : xs) = x : take (n - 1) xs
 -- drop
+drop :: Nat -> [a] -> [a]
+drop 0 xs = xs
+drop n (x : xs) = drop (n - 1) xs
 
 -- takeWhile
 -- dropWhile
@@ -142,7 +150,13 @@ infixl 5 +++
 -- (!!)
 
 -- filter
+filter :: (a -> Bool) -> [a] -> [a]
+filter f [] = []
+filter f (x : xs) = if f x then x : filter f xs else filter f xs
 -- map
+map :: (a -> b) -> [a] -> [b]
+map f [] = []
+map f (x : xs) = f x : map f xs
 
 -- cycle
 -- repeat

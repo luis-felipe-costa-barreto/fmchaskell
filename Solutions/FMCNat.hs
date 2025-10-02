@@ -1,6 +1,6 @@
 {-# LANGUAGE GADTs #-}
 
-module ExNat where
+module FMCNat where
 
 -- Do not alter this import!
 -- Para que eu não precisasse alterar esse "import", fiz outro
