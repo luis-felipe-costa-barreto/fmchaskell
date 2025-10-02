@@ -20,12 +20,6 @@ curry f a b = f (a, b)
 uncurry :: (a -> b -> c) -> ((a, b) -> c)
 uncurry f (a, b) = f a b
 
-ptwo :: Int -> Int
-ptwo x = x * 2
-
-mfive :: Int -> Int
-mfive x = x - 5
-
 -- flip takes a (currified) binary function
 -- and returns one that behaves the same but takes its arguments in the opposite order
 flip :: (a -> b -> c) -> (b -> a -> c)
@@ -45,8 +39,8 @@ f $ x = f x
 
 -- iterate: figure it out by its type
 iterate :: (a -> a) -> a -> [a]
-iterate = undefined
+iterate f x = x : iterate f (f x)
 
 -- orbit
---orbit = flip iterate
+orbit = flip iterate
 
