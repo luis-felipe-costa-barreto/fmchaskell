@@ -112,26 +112,36 @@ xs +++ (y:ys) = (xs +++ [y]) +++ ys
 -- (hmm?!)
 infixl 5 +++
 
--- minimum :: Ord a => [a] -> a
+minimum :: Ord a => [a] -> a
+minimum [] = undefined
+minimum [x] = x
+minimum [u, v] = if u <= v then u else v
+minimum (x : xs) = minimum (x : [minimum xs])
 
--- maximum :: Ord a => [a] -> a
+maximum :: Ord a => [a] -> a
+maximum [] = undefined
+maximum [x] = x
+maximum [u, v] = if u >= v then u else v
+maximum (x : xs) = maximum (x : [maximum xs])
 
 -- take
 take :: Nat -> [a] -> [a]
-take 0 xs = []
+take 0 _ = []
 take n (x : xs) = x : take (n - 1) xs
 -- drop
 drop :: Nat -> [a] -> [a]
 drop 0 xs = xs
-drop n (x : xs) = drop (n - 1) xs
+drop n (_ : xs) = drop (n - 1) xs
 
 -- takeWhile
+takeWhile :: (a -> Bool) -> [a] -> [a]
+takeWhile b (x : xs) = if b x then x : takeWhile b xs else []
 -- dropWhile
-
+dropWhile :: (a -> Bool) -> [a] -> [a]
+dropWhile b (x : xs) = if b x then dropWhile b xs else x : xs
 -- tails
 -- init
 -- inits
-
 -- subsequences
 
 -- any
@@ -151,11 +161,11 @@ drop n (x : xs) = drop (n - 1) xs
 
 -- filter
 filter :: (a -> Bool) -> [a] -> [a]
-filter f [] = []
+filter _ [] = []
 filter f (x : xs) = if f x then x : filter f xs else filter f xs
 -- map
 map :: (a -> b) -> [a] -> [b]
-map f [] = []
+map _ [] = []
 map f (x : xs) = f x : map f xs
 
 -- cycle
