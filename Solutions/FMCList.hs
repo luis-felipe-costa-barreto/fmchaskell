@@ -139,9 +139,23 @@ takeWhile b (x : xs) = if b x then x : takeWhile b xs else []
 -- dropWhile
 dropWhile :: (a -> Bool) -> [a] -> [a]
 dropWhile b (x : xs) = if b x then dropWhile b xs else x : xs
+
 -- tails
+tails :: [a] -> [[a]]
+tails [] = undefined
+tails (x : xs) = if null xs then [[]] else xs : tails xs
+
 -- init
+init :: [a] -> [a]
+init [] = undefined
+init [_] = []
+init (x : xs) = x : init xs
 -- inits
+inits :: [a] -> [[a]]
+inits [] = undefined
+inits [x] = [[]]
+inits xs = snoc (init xs) (inits (init xs))
+
 -- subsequences
 
 -- any
@@ -170,7 +184,13 @@ map f (x : xs) = f x : map f xs
 
 -- cycle
 -- repeat
+repeat :: a -> [a]
+repeat x = x : repeat x
+
 -- replicate
+replicate :: Nat -> a -> [a]
+replicate 0 _ = []
+replicate n x = x : replicate (n - 1) x
 
 -- isPrefixOf
 -- isInfixOf
@@ -203,11 +223,6 @@ last :: [a] -> a
 last [] = undefined
 last [x] = x
 last (x : xs) = last xs
-
-pop :: [a] -> [a]
-pop [] = undefined
-pop [a] = []
-pop (x : xs) = x : pop xs
 
 -- checks if the letters of a phrase form a palindrome (see below for examples)
 --palindrome :: String -> Bool
