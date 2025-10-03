@@ -254,6 +254,9 @@ zipWith f (x : xs) (y : ys) = f x y : zipWith f xs ys
 zipWith _ _ _ = []
 
 -- intercalate
+intercalate :: [a] -> [[a]] -> [a]
+intercalate _ [] = []
+intercalate xs1 (x : xs2) = if null xs2 then x else x ++ xs1 ++ intercalate xs1 xs2
 
 -- nub
 
