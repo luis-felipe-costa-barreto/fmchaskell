@@ -161,7 +161,8 @@ inits xs = snoc (init xs) (inits (init xs))
 
 -- subsequences;
 subsequences :: [a] -> [[a]]
-subsequences = undefined
+subsequences [] = [[]]
+subsequences (x : xs) = undefined
 
 -- any
 any :: (a -> Bool) -> [a] -> Bool
@@ -236,14 +237,24 @@ isPrefixOf :: Eq a => [a] -> [a] -> Bool
 isPrefixOf prex xs = elem prex (inits xs)
 
 -- isInfixOf
+
+
 -- isSuffixOf
 isSufixOf :: Eq a => [a] -> [a] -> Bool
 isSufixOf prex xs = elem prex (tails xs)
 
 -- zip
+zip :: [a] -> [b] -> [(a, b)]
+zip (x : xs) (y : ys) = (x, y) : zip xs ys
+zip _ _ = []
+
 -- zipWith
+zipWith :: (a -> b -> c) -> [a] -> [b] -> [c]
+zipWith f (x : xs) (y : ys) = f x y : zipWith f xs ys
+zipWith _ _ _ = []
 
 -- intercalate
+
 -- nub
 
 -- splitAt
