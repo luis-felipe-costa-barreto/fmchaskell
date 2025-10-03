@@ -232,8 +232,13 @@ replicate 0 _ = []
 replicate (S n) x = x : replicate n x
 
 -- isPrefixOf
+isPrefixOf :: Eq a => [a] -> [a] -> Bool
+isPrefixOf prex xs = elem prex (inits xs)
+
 -- isInfixOf
 -- isSuffixOf
+isSufixOf :: Eq a => [a] -> [a] -> Bool
+isSufixOf prex xs = elem prex (tails xs)
 
 -- zip
 -- zipWith
