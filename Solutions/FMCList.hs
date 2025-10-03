@@ -128,6 +128,7 @@ maximum (x : xs) = maximum (x : [maximum xs])
 take :: Nat -> [a] -> [a]
 take 0 _ = []
 take n (x : xs) = x : take (n - 1) xs
+
 -- drop
 drop :: Nat -> [a] -> [a]
 drop 0 xs = xs
@@ -136,6 +137,7 @@ drop n (_ : xs) = drop (n - 1) xs
 -- takeWhile
 takeWhile :: (a -> Bool) -> [a] -> [a]
 takeWhile b (x : xs) = if b x then x : takeWhile b xs else []
+
 -- dropWhile
 dropWhile :: (a -> Bool) -> [a] -> [a]
 dropWhile b (x : xs) = if b x then dropWhile b xs else x : xs
@@ -150,19 +152,38 @@ init :: [a] -> [a]
 init [] = undefined
 init [_] = []
 init (x : xs) = x : init xs
+
 -- inits
 inits :: [a] -> [[a]]
 inits [] = undefined
 inits [x] = [[]]
 inits xs = snoc (init xs) (inits (init xs))
 
--- subsequences
+-- subsequences;
+subsequences :: [a] -> [[a]]
+subsequences = undefined
 
 -- any
+any :: (a -> Bool) -> [a] -> Bool
+any _ [] = False
+any f [x] = f x
+any f (x : xs) = f x || any f xs
+
 -- all
+all :: (a -> Bool) -> [a] -> Bool
+all _ [] = True
+all f [x] = f x
+all f (x : xs) = f x && all f xs 
 
 -- and
+and :: [Bool] -> Bool
+and [x] = x
+and (x : xs) = x && and xs
+
 -- or
+or :: [Bool] -> Bool
+or [x] = x
+or (x : xs) = x || or xs
 
 -- concat
 
@@ -177,6 +198,7 @@ inits xs = snoc (init xs) (inits (init xs))
 filter :: (a -> Bool) -> [a] -> [a]
 filter _ [] = []
 filter f (x : xs) = if f x then x : filter f xs else filter f xs
+
 -- map
 map :: (a -> b) -> [a] -> [b]
 map _ [] = []
