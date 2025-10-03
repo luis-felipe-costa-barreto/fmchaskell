@@ -127,12 +127,12 @@ maximum (x : xs) = maximum (x : [maximum xs])
 -- take
 take :: Nat -> [a] -> [a]
 take 0 _ = []
-take n (x : xs) = x : take (n - 1) xs
+take (S n) (x : xs) = x : take n xs
 
 -- drop
 drop :: Nat -> [a] -> [a]
 drop 0 xs = xs
-drop n (_ : xs) = drop (n - 1) xs
+drop (S n) (_ : xs) = drop n xs
 
 -- takeWhile
 takeWhile :: (a -> Bool) -> [a] -> [a]
@@ -186,13 +186,26 @@ or [x] = x
 or (x : xs) = x || or xs
 
 -- concat
+concat :: [[a]] -> [a]
+concat [x] = x
+concat (x : xs) = x ++ concat xs
 
 -- elem using the funciton 'any' above
+elem :: Eq a => a -> [a] -> Bool
+elem x xs = any (== x) xs
 
 -- elem': same as elem but elementary definition
 -- (without using other functions except (==))
+elem' :: Eq a => a -> [a] -> Bool
+elem' _ [] = False
+elem' x1 (x2 : xs) = (x1 == x2) || elem' x1 xs
 
 -- (!!)
+(!!) :: [a] -> Nat -> a
+(x : xs) !! n = if n >= length (x : xs) then undefined else
+  case n of
+    0 -> x
+    S n -> xs !! n
 
 -- filter
 filter :: (a -> Bool) -> [a] -> [a]
@@ -205,6 +218,10 @@ map _ [] = []
 map f (x : xs) = f x : map f xs
 
 -- cycle
+cycle :: [a] -> [a]
+cycle [] = undefined
+cycle xs = xs ++ cycle xs
+
 -- repeat
 repeat :: a -> [a]
 repeat x = x : repeat x
@@ -212,7 +229,7 @@ repeat x = x : repeat x
 -- replicate
 replicate :: Nat -> a -> [a]
 replicate 0 _ = []
-replicate n x = x : replicate (n - 1) x
+replicate (S n) x = x : replicate n x
 
 -- isPrefixOf
 -- isInfixOf
