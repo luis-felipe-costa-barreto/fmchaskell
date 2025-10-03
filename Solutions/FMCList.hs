@@ -258,15 +258,43 @@ intercalate :: [a] -> [[a]] -> [a]
 intercalate _ [] = []
 intercalate xs1 (x : xs2) = if null xs2 then x else x ++ xs1 ++ intercalate xs1 xs2
 
+elimin :: Eq a => a -> [a] -> [a]
+elimin _ [] = []
+elimin x1 (x2 : xs) = if x1 == x2 then elimin x1 xs else x2 : elimin x1 xs
+
 -- nub
+nub :: Eq a => [a] -> [a]
+nub [] = []
+nub (x : xs) = x : nub (elimin x xs)
 
 -- splitAt
+splitAt :: Nat -> [a] -> ([a], [a])
+splitAt n xs = if n > length xs then splitAt (length xs) xs else (take n xs, drop n xs)
 -- what is the problem with the following?:
--- splitAt n xs  =  (take n xs, drop n xs)
+-- splitAt n xs  =  (take n xs, drop n xs) --idk
+
+getIndex :: Eq a => a -> [a] -> Nat
+getIndex _ [] = undefined
+getIndex xalvo (xh : xs) = if xalvo == xh then 0 else S (getIndex xalvo xs)
+
+getByCondition :: (a -> Bool) -> [a] -> Nat
+getByCondition _ [] = undefined
+getByCondition f (x : xs) = if f x then 0 else S (getByCondition f xs)
 
 -- break
+break :: (a -> Bool) -> [a] -> ([a], [a])
+break f xs = splitAt (getByCondition f xs) xs
+
+replace :: Eq a => a -> a -> [a] -> [a]
+replace _ _ [] = []
+replace xalvo xnovo (xh : xs) = if xalvo == xh
+  then xnovo : replace xalvo xnovo xs
+  else xh : replace xalvo xnovo xs
 
 -- lines
+lines :: String -> [String]
+lines = undefined
+
 -- words
 -- unlines
 -- unwords
