@@ -160,7 +160,7 @@ inits [x] = [[]]
 inits xs = snoc (init xs) (inits (init xs))
 
 -- subsequences;
-
+-- objetivo
 
 -- any
 any :: (a -> Bool) -> [a] -> Bool
@@ -235,7 +235,7 @@ isPrefixOf :: Eq a => [a] -> [a] -> Bool
 isPrefixOf prex xs = elem prex (inits xs)
 
 -- isInfixOf
-
+-- objetivo
 
 -- isSuffixOf
 isSufixOf :: Eq a => [a] -> [a] -> Bool
@@ -326,7 +326,7 @@ unwords [] = []
 unwords s = init (concat (map (++ [' ']) s))
 
 -- transpose
-
+-- objetivo
 
 (==*) :: Eq a => [a] -> [a] -> Bool
 [] ==* [] = True
@@ -350,7 +350,7 @@ simplify s = elimin ' ' (elimin ',' (elimin '.' (elimin '\n' (elimin '\'' (elimi
 
 palindrome :: String -> Bool
 palindrome [] = undefined
-palindrome xs = simplify xs ==* simplify (reverse xs)
+palindrome xs = simplify (map C.toLower xs) ==* simplify (reverse (map C.toLower xs))
 
 {-
 
