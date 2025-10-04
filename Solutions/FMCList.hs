@@ -328,6 +328,7 @@ unwords s = init (concat (map (++ [' ']) s))
 
 -- transpose
 
+
 (==*) :: Eq a => [a] -> [a] -> Bool
 [] ==* [] = True
 (x : xs) ==* (y : ys) = x == y && xs ==* ys
@@ -336,6 +337,9 @@ last :: [a] -> a
 last [] = undefined
 last [x] = x
 last (x : xs) = last xs
+
+simplify :: String -> String
+simplify s = elimin ' ' (elimin ',' (elimin '.' (elimin '\n' (elimin '\'' (elimin '?' (elimin '!' s))))))
 
 -- checks if the letters of a phrase form a palindrome (see below for examples)
 --palindrome :: String -> Bool
@@ -347,7 +351,7 @@ last (x : xs) = last xs
 
 palindrome :: String -> Bool
 palindrome [] = undefined
-palindrome xs = xs ==* reverse xs
+palindrome xs = simplify xs ==* simplify (reverse xs)
 
 {-
 
