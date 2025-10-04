@@ -14,7 +14,6 @@ import qualified Prelude   as P
 import qualified Data.List as L
 import qualified Data.Char as C
 import FMCNat
-import Control.Arrow (ArrowChoice(left, right))
 
 {- import qualified ... as ... ?
 
