@@ -14,6 +14,7 @@ import qualified Prelude   as P
 import qualified Data.List as L
 import qualified Data.Char as C
 import FMCNat
+import Control.Arrow (ArrowChoice(left, right))
 
 {- import qualified ... as ... ?
 
@@ -160,9 +161,7 @@ inits [x] = [[]]
 inits xs = snoc (init xs) (inits (init xs))
 
 -- subsequences;
-subsequences :: [a] -> [[a]]
-subsequences [] = [[]]
-subsequences (x : xs) = undefined
+
 
 -- any
 any :: (a -> Bool) -> [a] -> Bool
@@ -283,6 +282,7 @@ getByCondition f (x : xs) = if f x then 0 else S (getByCondition f xs)
 
 -- break
 break :: (a -> Bool) -> [a] -> ([a], [a])
+break _ [] = ([], [])
 break f xs = splitAt (getByCondition f xs) xs
 
 replace :: Eq a => a -> a -> [a] -> [a]
@@ -291,13 +291,40 @@ replace xalvo xnovo (xh : xs) = if xalvo == xh
   then xnovo : replace xalvo xnovo xs
   else xh : replace xalvo xnovo xs
 
+eliminById :: Nat -> [a] -> [a]
+eliminById _ [] = []
+eliminById 0 (x : xs) = xs
+eliminById (S n) (x : xs) = x : eliminById n xs
+
+aleft :: (a, b) -> a
+aleft (x, _) = x
+
+aright :: (a, b) -> b
+aright (_, y) = y
+
+separate :: Eq a => a -> [a] -> [[a]]
+separate _ [] = []
+separate xalvo xs = if elem xalvo xs
+  then aleft (break (==xalvo) xs) : separate xalvo (eliminById 0 (aright (break (==xalvo) xs)))
+  else [xs]
+
 -- lines
 lines :: String -> [String]
-lines = undefined
+lines s = elimin [] (separate '\n' s)
 
 -- words
+words :: String -> [String]
+words s = elimin [] (separate ' ' (concat (lines s)))
+
 -- unlines
+unlines :: [String] -> String
+unlines [] = []
+unlines s = init (concat (map (++ ['\n']) s))
+
 -- unwords
+unwords :: [String] -> String
+unwords [] = []
+unwords s = init (concat (map (++ [' ']) s))
 
 -- transpose
 
