@@ -269,7 +269,7 @@ nub (x : xs) = x : nub (elimin x xs)
 splitAt :: Nat -> [a] -> ([a], [a])
 splitAt n xs = if n > length xs then splitAt (length xs) xs else (take n xs, drop n xs)
 -- what is the problem with the following?:
--- splitAt n xs  =  (take n xs, drop n xs) --idk
+-- splitAt n xs  =  (take n xs, drop n xs)
 
 getIndex :: Eq a => a -> [a] -> Nat
 getIndex _ [] = undefined
